@@ -1,5 +1,4 @@
 import mongoose, { Document, Schema } from "mongoose";
-import { platform } from "os";
 
 interface IUser extends Document {
   firstName: string;
