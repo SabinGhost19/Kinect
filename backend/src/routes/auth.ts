@@ -3,6 +3,10 @@ import { Request, Response } from "express";
 const bycriptjs = require("bcryptjs");
 const User = require("../models/User");
 const { ValidatePassword, HashPassword } = require("../utils/validation");
+const {
+  GenerateAccsessToken,
+  GenerateRefreshToken,
+} = require("../utils/JWT_utils");
 //sa zicem ca vine in body cu:
 // {
 //     email:---
@@ -43,7 +47,15 @@ router.post("/register", async (req: Request, res: Response) => {
 router.post("/login", async (req: Request, res: Response) => {
   try {
     if (await ValidatePassword(req.body.password, req.body.email)) {
+      console.log(req.body);
+      const accesToken = GenerateAccsessToken(req.body);
+      const refreshToken = GenerateRefreshToken(req.body);
+      res.json({ accesToken: accesToken, refreshToken: refreshToken });
       //generate de acces token for it
+    } else {
+      //res.status(403).send("Not Allowed");
     }
-  } catch (error) {}
+  } catch (error) {
+    //res.status(500).send();
+  }
 });
