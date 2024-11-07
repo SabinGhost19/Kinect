@@ -4,7 +4,7 @@ require("dotenv").config({ path: "./src/.env" });
 const cors = require("cors");
 const mongoose = require("mongoose");
 
-const authRoutes = require("./routes/auth");
+import authRoutes from "./routes/auth";
 
 app.use(express.json());
 app.use(cors());

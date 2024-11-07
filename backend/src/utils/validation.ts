@@ -1,7 +1,7 @@
 import bcryptjs from "bcryptjs";
 const User = require("../models/User");
 
-async function HashPassword(password: string): Promise<string> {
+export async function HashPassword(password: string): Promise<string> {
   try {
     const salt = await bcryptjs.genSalt();
     const hashedPassword = await bcryptjs.hash(password, salt);
@@ -12,7 +12,7 @@ async function HashPassword(password: string): Promise<string> {
   }
 }
 
-async function ValidatePassword(
+export async function ValidatePassword(
   password: string,
   email: string
 ): Promise<boolean> {
