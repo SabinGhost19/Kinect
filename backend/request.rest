@@ -1,0 +1,17 @@
+POST http://localhost:3000/auth/register
+Content-Type: application/json
+
+{
+    "firstName":"Tavi",
+    "lastName":"Gingu",
+    "email":"test24@gmail.com",
+    "password":"12345",
+    "profileImage":"1233edsd3e2efg322egdg",
+    "description":"good pissy pissy ",
+    "socialLinks": [
+    {
+      "platform": "LinkedIn",
+      "url": "http://links_social:23/sd"
+    }
+  ]
+}

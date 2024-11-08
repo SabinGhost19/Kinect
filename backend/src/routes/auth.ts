@@ -63,41 +63,38 @@ import { ValidatePassword, HashPassword } from "../utils/validation";
 
 const router = express.Router();
 
-// router.post("/register", async (req: Request, res: Response) => {
-//   try {
-//     // Verificăm dacă email-ul există deja în baza de date
-//     const is_email = await User.findOne({ email: req.body.email });
-//     if (is_email) {
-//       return res.status(400).send("Email already exists");
-//     }
+router.post("/register", async (req, res) => {
+  try {
+    console.log("Requestul este:", req.body);
+    const is_email = await User.findOne({ email: req.body.email });
+    if (is_email) {
+      res.status(400).send("Email aldready exists!");
+      return;
+    }
 
-//     // Generăm parola hash-uită
-//     const hashedPassword = await HashPassword(req.body.password);
+    const hashedPassword = await HashPassword(req.body.password);
 
-//     // Cream utilizatorul pe baza datelor din request
-//     const user = new User({
-//       firstName: req.body.firstName,
-//       lastName: req.body.lastName,
-//       email: req.body.email,
-//       password: hashedPassword,
-//       profileImage: req.body.profileImage,
-//       description: req.body.description,
-//       socialLinks: req.body.socialLinks,
-//     });
+    const user = new User({
+      firstName: req.body.firstName,
+      lastName: req.body.lastName,
+      email: req.body.email,
+      password: hashedPassword,
+      profileImage: req.body.profileImage,
+      description: req.body.description,
+      socialLinks: req.body.socialLinks,
+    });
 
-//     // Salvăm utilizatorul în baza de date
-//     const savedUser = await user.save();
+    console.log("Userul creat este: ", user);
+    const savedUser = await user.save();
 
-//     // Răspundem cu succes
-//     res
-//       .status(201)
-//       .json({ message: "User created successfully", user: savedUser });
-//   } catch (error) {
-//     console.error("Error creating user:", error);
-//     res.status(500).json({ message: "Internal server error" });
-//   }
-// });
-
+    res
+      .status(201)
+      .json({ message: "User created successfully", user: savedUser });
+  } catch (error) {
+    console.error("Error creating user:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+});
 router.post("/login", async (req: Request, res: Response) => {
   try {
     // Verificăm dacă parola este validă pentru utilizatorul dat
@@ -117,40 +114,5 @@ router.post("/login", async (req: Request, res: Response) => {
     res.status(500).send();
   }
 });
-
-// router.post("/register", async (req: Request, res: Response) => {
-//   try {
-//     // Verificăm dacă email-ul există deja în baza de date
-//     const is_email = await User.findOne({ email: req.body.email });
-//     if (is_email) {
-//       return res.status(400).send("Email already exists");
-//     }
-
-//     // Generăm parola hash-uită
-//     const hashedPassword = await HashPassword(req.body.password);
-
-//     // Cream utilizatorul pe baza datelor din request
-//     const user = new User({
-//       firstName: req.body.firstName,
-//       lastName: req.body.lastName,
-//       email: req.body.email,
-//       password: hashedPassword,
-//       profileImage: req.body.profileImage,
-//       description: req.body.description,
-//       socialLinks: req.body.socialLinks,
-//     });
-
-//     // Salvăm utilizatorul în baza de date
-//     const savedUser = await user.save();
-
-//     // Răspundem cu succes
-//     res
-//       .status(201)
-//       .json({ message: "User created successfully", user: savedUser });
-//   } catch (error) {
-//     console.error("Error creating user:", error);
-//     res.status(500).json({ message: "Internal server error" });
-//   }
-// });
 
 export default router;
