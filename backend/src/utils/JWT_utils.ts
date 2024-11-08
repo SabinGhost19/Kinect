@@ -18,4 +18,4 @@ export function GenerateRefreshToken(user: InstanceType<typeof IUser>): string {
   }
   return jwt.sign(user, process.env.REFRESH_TOKEN_SECRET);
 }
-module.exports = { GenerateAccsessToken };
+module.exports = { GenerateAccsessToken, GenerateRefreshToken };

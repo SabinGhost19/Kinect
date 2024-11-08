@@ -5,10 +5,11 @@ const cors = require("cors");
 const mongoose = require("mongoose");
 
 import authRoutes from "./routes/auth";
-
+import contentRoutes from "./routes/userContent";
 app.use(express.json());
 app.use(cors());
 app.use("/auth", authRoutes);
+app.use("/data", contentRoutes);
 
 const connectToMongo = async () => {
   try {
