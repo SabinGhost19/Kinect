@@ -17,6 +17,14 @@ const LogIn: React.FC = () => {
         onChange={handleChange}
         placeholder="Enter your email"
       />
+      <Input
+        label="Password"
+        type="password"
+        name="password"
+        value={formData.password}
+        onChange={handleChange}
+        placeholder="Enter your password"
+      />
     </div>
   );
 };

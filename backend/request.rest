@@ -1,14 +1,25 @@
- #GET http://localhost:3000/data/all_data/672fbc16eec181dde7748cbd
+ GET http://localhost:3000/data/all_data/672fbc16eec181dde7748cbd
+ Content-Type: application/json
+
+{
+    "token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Ik1JbGlAZ21haWwuY29tIiwiaWF0IjoxNzMxMTkwNTEwfQ.Xz8H8dBj6uR5zX2CS5Vz-vFFk-0NCyT89aRIHuKKxsk",
+}
+
+POST http://localhost:3000/auth/refresh
+Content-Type: application/json
+
+{
+    "token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Ik1JbGlAZ21haWwuY29tIiwiaWF0IjoxNzMxMTkwNTEwfQ.Xz8H8dBj6uR5zX2CS5Vz-vFFk-0NCyT89aRIHuKKxsk",
+}
 
 
+POST http://localhost:3000/auth/login
+Content-Type: application/json
 
-# POST http://localhost:3000/auth/login
-# Content-Type: application/json
-
-# {
-#     "email": "testHesh@gmail.com",
-#     "password": "12345"
-# }
+{
+    "email": "MIli@gmail.com",
+    "password": "MILI"
+}
 
 POST http://localhost:3000/auth/register
 Content-Type: application/json

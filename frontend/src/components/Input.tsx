@@ -11,9 +11,12 @@ interface InputPorps {
 
 const Input: React.FC<InputPorps> = ({ label, type, name, value, onChange, placeholder }) => {
   return (
-    <div>
-      <label htmlFor={name}>{label}</label>
+    <div className="mb-4 flex p-4 m-3">
+      <label className="p-2 m-1" htmlFor={name}>
+        {label}{' '}
+      </label>
       <input
+        className="m-2 p-1"
         id={name}
         name={name}
         type={type}

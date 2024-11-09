@@ -106,13 +106,14 @@ interface AuthenticatedRequest extends Request {
   user?: JwtPayload | string;
 }
 
-function GenerateAccessToken(user: InstanceType<typeof User>): string {
+function GenerateAccessToken(user: InstanceType<typeof User> | any): string {
   if (!process.env.ACCESS_TOKEN_SECRET) {
     throw new Error(
       "ACCESS_TOKEN_SECRET is not defined in environment variables."
     );
   }
-  // Creăm un payload cu informațiile relevante
+  //create a payload for generting the jwt token
+
   const payload = {
     id: user._id,
     email: user.email,
@@ -129,7 +130,7 @@ function GenerateRefreshToken(user: InstanceType<typeof User>): string {
       "REFRESH_TOKEN_SECRET is not defined in environment variables."
     );
   }
-  // Creăm un payload cu informațiile relevante
+  //create a payload for generting the jwt token
   const payload = {
     id: user._id,
     email: user.email,
