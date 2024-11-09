@@ -1,13 +1,25 @@
+ #GET http://localhost:3000/data/all_data/672fbc16eec181dde7748cbd
+
+
+
+# POST http://localhost:3000/auth/login
+# Content-Type: application/json
+
+# {
+#     "email": "testHesh@gmail.com",
+#     "password": "12345"
+# }
+
 POST http://localhost:3000/auth/register
 Content-Type: application/json
 
 {
-    "firstName":"Tavi",
-    "lastName":"Gingu",
-    "email":"test24@gmail.com",
-    "password":"12345",
+    "firstName":"MIlli",
+    "lastName":"Aleisx",
+    "email":"MIli@gmail.com",
+    "password":"MILI",
     "profileImage":"1233edsd3e2efg322egdg",
-    "description":"good pissy pissy ",
+    "description":"BIg Smoke ",
     "socialLinks": [
     {
       "platform": "LinkedIn",

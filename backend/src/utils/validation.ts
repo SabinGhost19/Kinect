@@ -1,5 +1,5 @@
 import bcryptjs from "bcryptjs";
-const User = require("../models/User");
+import UserModel from "../models/User";
 
 export async function HashPassword(password: string): Promise<string> {
   try {
@@ -17,7 +17,7 @@ export async function ValidatePassword(
   email: string
 ): Promise<boolean> {
   try {
-    const user = await User.findOne({ email });
+    const user = await UserModel.findOne({ email });
 
     // if user exist and password is valid return  true
     if (user && (await bcryptjs.compare(password, user.password))) {

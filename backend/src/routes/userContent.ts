@@ -1,5 +1,5 @@
 import express from "express";
-import User from "../models/User";
+import UserModel from "../models/User";
 import { Request, Response } from "express";
 const router = express.Router();
 
@@ -14,7 +14,7 @@ router.get("/all_data/:id", async (req: Request, res: Response) => {
       return;
     }
 
-    const user = await User.findById(id);
+    const user = await UserModel.findById(id);
 
     if (!user) {
       res.status(404).json({ message: "User not found" });

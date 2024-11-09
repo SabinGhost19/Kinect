@@ -6,10 +6,12 @@ const mongoose = require("mongoose");
 
 import authRoutes from "./routes/auth";
 import contentRoutes from "./routes/userContent";
+import { authenticateTokenVerify } from "./utils/JWT_utils";
+
 app.use(express.json());
 app.use(cors());
 app.use("/auth", authRoutes);
-app.use("/data", contentRoutes);
+app.use("/data", authenticateTokenVerify, contentRoutes);
 
 const connectToMongo = async () => {
   try {
