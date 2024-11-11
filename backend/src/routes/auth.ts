@@ -93,8 +93,11 @@ router.post("/login", async (req: Request, res: Response) => {
     if (isValidPassword) {
       const accesToken = GenerateAccessToken(req.body);
       const refreshToken = GenerateRefreshToken(req.body);
-      res.json({ accesToken: accesToken, refreshToken: refreshToken });
+      res
+        .status(200)
+        .json({ accesToken: accesToken, refreshToken: refreshToken });
     } else {
+      console.log("Email si parola nevalida, USER NEEXISTENT...");
       res.status(403).send("Not Allowed");
     }
   } catch (error) {

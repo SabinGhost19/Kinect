@@ -2,6 +2,10 @@ import React, { useState } from 'react';
 import Input from '../components/Input';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import {
+  setAccesTokenInLocalStorare,
+  setRefreshTokenInLocalStorare,
+} from '../utils/localStorageUtils';
 
 const LogIn: React.FC = () => {
   const url = 'http://localhost:3000/auth/login';
@@ -18,9 +22,15 @@ const LogIn: React.FC = () => {
         password: formData.password,
       });
       console.log('Response :', response);
+
       if (response.status === 201 || response.status === 200) {
-        const { accessToken } = response.data;
+        const { accessToken, refreshToken } = response.data;
+
         console.log('Access Token primit:', accessToken);
+        console.log('and refreshToken', refreshToken);
+
+        setAccesTokenInLocalStorare(accessToken);
+        setRefreshTokenInLocalStorare(refreshToken);
         navigate('/home');
       }
     } catch (error) {
