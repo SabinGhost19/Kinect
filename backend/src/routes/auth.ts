@@ -8,7 +8,7 @@ const router = express.Router();
 
 router.post("/refresh", async (req: Request, res: Response) => {
   const { token } = req.body;
-
+  console.log("TOKEN REF VENIT:", token);
   if (!token) {
     res
       .status(401)
@@ -20,6 +20,7 @@ router.post("/refresh", async (req: Request, res: Response) => {
     // Find user with matching refresh token
     const user = await UserModel.findOne({ refreshToken: token });
     if (!user) {
+      console.log("USER NEGSIT");
       res.status(403).json({ message: "Invalid refresh token." });
       return;
     }
@@ -85,6 +86,14 @@ router.post("/register", async (req: Request, res: Response) => {
 router.post("/login", async (req: Request, res: Response) => {
   try {
     // Verificăm dacă parola este validă pentru utilizatorul dat
+
+    const user = await UserModel.findOne({ email: req.body.email });
+
+    if (!user) {
+      console.log("Email nevalid, USER NEEXISTENT...");
+      res.status(403).send("Not Allowed");
+      return;
+    }
     console.log("Aceste este req:.....", req.body);
     const isValidPassword = await ValidatePassword(
       req.body.password,
@@ -93,6 +102,10 @@ router.post("/login", async (req: Request, res: Response) => {
     if (isValidPassword) {
       const accesToken = GenerateAccessToken(req.body);
       const refreshToken = GenerateRefreshToken(req.body);
+
+      //actualiza userul si adaugam refreshtokenul corecpunzator
+      user.refreshToken.push(refreshToken);
+      await user.save();
       res
         .status(200)
         .json({ accesToken: accesToken, refreshToken: refreshToken });

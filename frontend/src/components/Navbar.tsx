@@ -20,12 +20,12 @@ const Navbar: React.FC<NavbarProps> = ({ title }) => {
           </span>
         </a>
         <div className="hidden md:flex space-x-8">
-          <a
-            href="#"
+          <Link
+            to={'/home'}
             className="text-gray-900 hover:text-blue-700 dark:text-white md:dark:hover:text-blue-500"
           >
             Home
-          </a>
+          </Link>
           <a
             href="#"
             className="text-gray-900 hover:text-blue-700 dark:text-white md:dark:hover:text-blue-500"

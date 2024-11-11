@@ -96,9 +96,15 @@
 // };
 
 import { Request, Response, NextFunction } from "express";
-import jwt, { JwtPayload, VerifyErrors } from "jsonwebtoken";
+import jwt, {
+  GetPublicKeyOrSecret,
+  JwtPayload,
+  Secret,
+  VerifyErrors,
+} from "jsonwebtoken";
 import User from "../models/User";
 import dotenv from "dotenv";
+import { JsonWebKeyInput, PublicKeyInput } from "crypto";
 
 dotenv.config({ path: "./src/.env" });
 
@@ -146,18 +152,35 @@ function authenticateTokenVerify(
 ): void {
   const authHeader = req.headers["authorization"];
   const token = authHeader && authHeader.split(" ")[1];
-
   if (!token) {
     res
-      .status(401)
+      .status(403)
       .json({ message: "Token is missing, authorization denied." });
     return;
   }
 
-  const decoded = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET as string);
-  (req as AuthenticatedRequest).user = decoded;
+  // const decoded = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET as string);
+  // (req as AuthenticatedRequest).user = decoded;
 
-  next();
+  jwt.verify(
+    token,
+    process.env.ACCESS_TOKEN_SECRET as
+      | Secret
+      | JsonWebKeyInput
+      | PublicKeyInput
+      | GetPublicKeyOrSecret,
+    (error, user) => {
+      //user obtinut din
+      //decodificarea tokenuluii si se obtine payloadul original
+      //cu care a fost codificat unde exista userul si parola
+      if (error) {
+        //has a token but has no longer acccess
+        return res.sendStatus(403);
+      }
+      req.user = user;
+      next();
+    }
+  );
 }
 
 export { GenerateAccessToken, GenerateRefreshToken, authenticateTokenVerify };

@@ -1,7 +1,7 @@
 const express = require("express");
 const app = express();
 require("dotenv").config({ path: "./src/.env" });
-const cors = require("cors");
+import cors from "cors";
 const mongoose = require("mongoose");
 
 import authRoutes from "./routes/auth";
@@ -9,7 +9,13 @@ import contentRoutes from "./routes/userContent";
 import { authenticateTokenVerify } from "./utils/JWT_utils";
 
 app.use(express.json());
-app.use(cors());
+app.use(
+  cors({
+    origin: "http://localhost:5173", // Înlocuiește cu originea frontend-ului tău
+    credentials: true,
+    allowedHeaders: ["Content-Type", "Authorization"], // Permite trimiterea cookie-urilor sau a altor credențiale
+  })
+);
 app.use("/auth", authRoutes);
 app.use("/data", authenticateTokenVerify, contentRoutes);
 

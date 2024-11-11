@@ -21,15 +21,15 @@ const LogIn: React.FC = () => {
         email: formData.email,
         password: formData.password,
       });
-      console.log('Response :', response);
+      console.log('Response :', response.data);
 
       if (response.status === 201 || response.status === 200) {
-        const { accessToken, refreshToken } = response.data;
+        const { accesToken, refreshToken } = response.data;
 
-        console.log('Access Token primit:', accessToken);
+        console.log('Access Token primit:', accesToken);
         console.log('and refreshToken', refreshToken);
 
-        setAccesTokenInLocalStorare(accessToken);
+        setAccesTokenInLocalStorare(accesToken);
         setRefreshTokenInLocalStorare(refreshToken);
         navigate('/home');
       }

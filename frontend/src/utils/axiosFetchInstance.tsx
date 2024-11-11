@@ -17,6 +17,7 @@ customAxios.interceptors.request.use(
   async (config) => {
     //getting from local storage
     const accessToken = getAccesTokenFromLocalStorage();
+    console.log('EXTRASSS:...', accessToken);
     if (accessToken) {
       config.headers['Authorization'] = `Bearer ${accessToken}`;
     }
@@ -33,16 +34,18 @@ customAxios.interceptors.response.use(
   },
   async (error) => {
     const originalRequest = error.config;
-
+    console.log('AICI SUNTTTTTT..................', error.response, 'SABIN::', error.config.status);
     if (error.response && error.response.status === 403 && !originalRequest._retry) {
       originalRequest._retry = true;
 
       const newAccesToken = await refreshTokenRequest();
+      console.log('New Access Token:', newAccesToken);
       setAccesTokenInLocalStorare(newAccesToken);
 
       customAxios.defaults.headers.common['Authorization'] = `Bearer ${newAccesToken}`;
       return customAxios(originalRequest);
     }
+    return Promise.reject(error);
   }
 );
 
