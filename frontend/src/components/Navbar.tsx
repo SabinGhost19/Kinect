@@ -26,12 +26,12 @@ const Navbar: React.FC<NavbarProps> = ({ title }) => {
           >
             Home
           </Link>
-          <a
-            href="#"
+          <Link
+            to={'/profile'}
             className="text-gray-900 hover:text-blue-700 dark:text-white md:dark:hover:text-blue-500"
           >
-            About
-          </a>
+            My Profile
+          </Link>
           <Link
             className="text-gray-900 hover:text-blue-700 dark:text-white md:dark:hover:text-blue-500"
             to={'/login'}
