@@ -8,7 +8,6 @@ const router = express.Router();
 
 router.post("/refresh", async (req: Request, res: Response) => {
   const { token } = req.body;
-  console.log("TOKEN REF VENIT:", token);
   if (!token) {
     res
       .status(401)
@@ -40,7 +39,6 @@ router.post("/refresh", async (req: Request, res: Response) => {
 
         // Generate a new access token if verification is successful
         const accessToken = GenerateAccessToken(decoded);
-        console.log("Sending new access token.");
         res.status(200).json({ accessToken });
         return;
       }

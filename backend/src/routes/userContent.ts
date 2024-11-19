@@ -4,11 +4,48 @@ import { Request, Response } from "express";
 import { JwtPayload } from "jsonwebtoken";
 const router = express.Router();
 import { AuthenticatedRequest } from "../utils/JWT_utils";
+import { upload } from "../index";
 
+router.post(
+  "/uploadProfile",
+  upload.single("image"),
+  async (req: AuthenticatedRequest, res: Response) => {
+    try {
+      const userEmail = req.user?.email;
+
+      if (!userEmail) {
+        res.status(400).json({ message: "User email is required" });
+        return;
+      }
+
+      const user = await UserModel.findOne({ email: userEmail });
+      if (!user) {
+        res.status(404).json({ message: "User not found" });
+        return;
+      }
+
+      if (req.file && req.file.mimetype.startsWith("image/")) {
+        const base64Image = req.file.buffer.toString("base64");
+        user.profileImage = base64Image;
+        await user.save();
+
+        console.log("Priof saved succef....");
+        res
+          .status(200)
+          .json({ message: "Profile image uploaded successfully" });
+      } else {
+        res.status(400).json({ message: "No image provided" });
+      }
+    } catch (error) {
+      console.error("Error uploading profile image:", error);
+      res.status(500).json({ message: "Internal server error" });
+    }
+  }
+);
 router.get("/profile", async (req: AuthenticatedRequest, res: Response) => {
   try {
     const userEmail = req.user?.email;
-    console.log("USER+ID:", userEmail);
+    console.log("\n\nUSER+ID:", userEmail);
     if (!userEmail) {
       res
         .status(400)
@@ -21,6 +58,7 @@ router.get("/profile", async (req: AuthenticatedRequest, res: Response) => {
       res.status(404).json({ message: "User not found" });
       return;
     }
+    console.log("USER:", user);
     res.status(200).json(user);
   } catch (error) {
     console.error("Error fetching user data:", error);

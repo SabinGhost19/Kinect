@@ -3,6 +3,9 @@ const app = express();
 require("dotenv").config({ path: "./src/.env" });
 import cors from "cors";
 const mongoose = require("mongoose");
+import multer from "multer";
+
+export const upload = multer({ storage: multer.memoryStorage() });
 
 import authRoutes from "./routes/auth";
 import contentRoutes from "./routes/userContent";

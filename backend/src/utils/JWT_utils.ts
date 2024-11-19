@@ -1,13 +1,7 @@
 import { Request, Response, NextFunction } from "express";
-import jwt, {
-  GetPublicKeyOrSecret,
-  JwtPayload,
-  Secret,
-  VerifyErrors,
-} from "jsonwebtoken";
+import jwt, { JwtPayload, Secret, VerifyErrors } from "jsonwebtoken";
 import User from "../models/User";
 import dotenv from "dotenv";
-import { JsonWebKeyInput, PublicKeyInput } from "crypto";
 
 dotenv.config({ path: "./src/.env" });
 
