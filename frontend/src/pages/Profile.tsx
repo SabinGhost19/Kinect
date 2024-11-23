@@ -2,9 +2,15 @@ import ProfileView from '../components/ProfileView';
 import { useEffect, useState } from 'react';
 import { customAxios } from '../utils/axiosFetchInstance';
 
+interface SocialLink {
+  platform: string;
+  url: string;
+}
 interface UserProfile {
   firstName: string;
   profileImage?: string;
+  description?: string;
+  socialLinks: SocialLink[];
 }
 
 const Profile = () => {
