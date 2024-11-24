@@ -42,6 +42,48 @@ router.post(
     }
   }
 );
+router.post(
+  "/uploadProfile/SocialLinks",
+  async (req: AuthenticatedRequest, res: Response) => {
+    try {
+      const userEmail = req.user?.email;
+      console.log("Eamil....", userEmail);
+      if (!userEmail) {
+        res.status(400).json({ message: "User email is required" });
+        return;
+      }
+      const user = await UserModel.findOne({ email: userEmail });
+      if (!user) {
+        console.log("NU sa-a gasit userul....");
+        res.status(404).json({ message: "User not found" });
+        return;
+      }
+      const { platform, url } = req.body;
+      if (!platform || !url) {
+        res.status(400).json({ message: "Platform and URL are required" });
+        return;
+      }
+
+      if (!user.socialLinks) {
+        user.socialLinks = [];
+      }
+      user.socialLinks.push({ platform, url });
+      console.log("Social.....", user.socialLinks);
+      // Salvăm modificările
+      await user.save();
+
+      res.status(200).json({
+        message: "Social link updated successfully",
+        socialLinks: user.socialLinks,
+      });
+      return;
+    } catch (error) {
+      console.error("Error updating social links:", error);
+      res.status(500).json({ message: "Internal server error" });
+      return;
+    }
+  }
+);
 router.get("/profile", async (req: AuthenticatedRequest, res: Response) => {
   try {
     const userEmail = req.user?.email;

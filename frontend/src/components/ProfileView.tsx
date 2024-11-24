@@ -1,4 +1,6 @@
 import { Link } from 'react-router-dom';
+import QRCode from '../components/QRCode';
+import { useState } from 'react';
 
 interface SocialLink {
   platform: string;
@@ -11,12 +13,15 @@ interface ProfileViewProps {
     profileImage?: string;
     description?: string;
     socialLinks: SocialLink[];
+    _id: string;
   };
 }
 
 const ProfileView = ({ data }: ProfileViewProps) => {
-  const { firstName, profileImage, description, socialLinks } = data;
+  const { firstName, profileImage, description, socialLinks, _id } = data;
+  const profileUrl = `http://172.20.10.3:5173/profile/${_id}`;
 
+  const [qrCode_Mode, setqrCode_Mode] = useState(false);
   return (
     <>
       <Link
@@ -33,7 +38,6 @@ const ProfileView = ({ data }: ProfileViewProps) => {
         <p className="text-lg font-normal text-center text-gray-500 lg:text-xl dark:text-gray-400 mb-6">
           {description}
         </p>
-
         {profileImage ? (
           <img
             className="rounded-full w-72 h-72 sm:w-96 sm:h-96 mb-8"
@@ -45,6 +49,18 @@ const ProfileView = ({ data }: ProfileViewProps) => {
             No Image
           </div>
         )}
+        {qrCode_Mode ? (
+          <QRCode url={profileUrl} />
+        ) : (
+          <button
+            onClick={() => {
+              setqrCode_Mode(true);
+            }}
+            className=" mt-10 mr-4 mb-10 ml-4 pt-3 pb-3 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+          >
+            Generate QR Code for your profile
+          </button>
+        )}
 
         <div className="w-full max-w-4xl bg-white border border-gray-100 rounded-lg dark:bg-gray-700 dark:border-gray-600">
           <ul className="space-y-4 p-6">
@@ -52,7 +68,7 @@ const ProfileView = ({ data }: ProfileViewProps) => {
               <li key={index} className="flex items-center">
                 <img
                   className="mr-4 rounded-full w-14 h-14"
-                  src={`/public/images/${socialLink.platform.toLowerCase()}.svg`}
+                  src={`/public/images/${socialLink.platform}.svg`}
                   alt={`${socialLink.platform} Logo`}
                 />
                 <label>{socialLink.platform} </label>

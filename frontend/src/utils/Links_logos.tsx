@@ -1,9 +1,9 @@
 export const socialLogos = {
-  LinkedIn: '/public/images/linkedin.svg',
-  Twitter: '/public/images/twitter.svg',
-  Facebook: '/public/images/facebook.svg',
-  Instagram: '/public/images/insta.svg',
-  WhatsApp: '/public/images/whapp.svg',
-  YT: '/public/images/yt.svg',
-  GIT: '/public/images/git.svg',
+  LinkedIn: '/public/images/LinkedIn.svg',
+  Twitter: '/public/images/Twitter.svg',
+  Facebook: '/public/images/Facebook.svg',
+  Instagram: '/public/images/Instagram.svg',
+  WhatsApp: '/public/images/WhatsApp.svg',
+  YouTube: '/public/images/YouTube.svg',
+  GitHub: '/public/images/GitHub.svg',
 };

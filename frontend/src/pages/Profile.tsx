@@ -11,6 +11,7 @@ interface UserProfile {
   profileImage?: string;
   description?: string;
   socialLinks: SocialLink[];
+  _id: string;
 }
 
 const Profile = () => {

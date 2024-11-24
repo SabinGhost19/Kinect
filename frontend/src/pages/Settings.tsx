@@ -26,25 +26,45 @@ const Settings: React.FC = () => {
     console.log(`Selected Platform: ${platform}, URL: ${url}`);
   };
 
-  const handleUpload = async () => {
+  const handleLinkUpload = async () => {
+    if (!platform || !url) {
+      alert('Please select a platform and insert a link');
+      return;
+    }
+
+    try {
+      const response = await customAxios.post('data/uploadProfile/SocialLinks', {
+        platform,
+        url,
+      });
+      console.log('Response:', response.data);
+      alert('Social link uploaded successfully!');
+    } catch (error) {
+      console.error('Error uploading social link:', error);
+      alert('Failed to upload social link. Please try again.');
+    }
+  };
+  const handleImageUpload = async () => {
     if (!selectedFile) {
       alert('Please select a file to upload');
       return;
     }
+
     const formData = new FormData();
     formData.append('image', selectedFile);
+
     try {
       const response = await customAxios.post('data/uploadProfile', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
       });
-      console.log(response.data);
+      console.log('Response:', response.data);
+      alert('Image uploaded successfully!');
     } catch (error) {
-      console.log(error);
+      console.error('Error uploading image:', error);
+      alert('Failed to upload image. Please try again.');
     }
-
-    console.log('Uploading file:', selectedFile);
   };
 
   return (
@@ -64,7 +84,7 @@ const Settings: React.FC = () => {
           className="mb-4 text-sm text-gray-300 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-500 file:text-white hover:file:bg-blue-600"
         />
         <button
-          onClick={handleUpload}
+          onClick={handleImageUpload}
           className="bg-blue-600 text-white px-6 py-2 rounded-full shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
         >
           Upload Image
@@ -100,6 +120,12 @@ const Settings: React.FC = () => {
           </span>
         </div>
       )}
+      <button
+        onClick={handleLinkUpload}
+        className="bg-blue-600 text-white px-6 py-2 rounded-full shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+      >
+        Update Social Links
+      </button>
     </div>
   );
 };
