@@ -1,4 +1,4 @@
-# ProfileHub - Centralized and Simplified Profile Sharing
+# Kinect - Centralized and Simplified Profile Sharing
 
 **ProfileHub** is a modern web application designed to centralize and simplify the sharing of contact information and profiles across various platforms.
 
